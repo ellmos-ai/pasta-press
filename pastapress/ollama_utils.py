@@ -30,8 +30,8 @@ def configure_ollama_profile(host=None, auto_select=False):
         print(f"[{i + 1}] {model}")
         
     if auto_select:
-        # Prioritize the most capable model we know (e.g., llama3.1 if available)
-        preferred_models = ['llama3.1', 'llama3', 'mistral', 'gemma2']
+        # Prioritize the most capable model we know (first match wins)
+        preferred_models = ['qwen3.6', 'qwen3', 'qwen', 'llama3.1', 'llama3', 'mistral', 'gemma2']
         selected_model = None
         for pref in preferred_models:
             for available in models:

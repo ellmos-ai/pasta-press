@@ -6,8 +6,13 @@ try:
 except ImportError:
     pypandoc = None
 
-SUPPORTED_FORMATS = ['.txt', '.md', '.csv', '.json', '.yaml', '.yml', '.doc', '.docx', '.rtf', '.odt', '.tex']
-PANDOC_FORMATS = ['.doc', '.docx', '.rtf', '.odt']
+# Formats read directly as plain text.
+TEXT_FORMATS = ['.txt', '.md', '.markdown', '.csv', '.json', '.yaml', '.yml', '.tex']
+# Binary formats converted to Markdown via Pandoc.
+# Note: legacy binary .doc is NOT supported by Pandoc (no reader exists).
+PANDOC_FORMATS = ['.docx', '.rtf', '.odt']
+SUPPORTED_FORMATS = TEXT_FORMATS + PANDOC_FORMATS
+
 
 def ensure_pandoc():
     if pypandoc is None:
@@ -24,6 +29,7 @@ def ensure_pandoc():
             logger.error(f"Failed to download Pandoc: {e}")
             return False
 
+
 def read_text_from_file(file_path):
     """
     Reads text from a file. If it's a Pandoc-supported format, it converts it to Markdown.
@@ -31,15 +37,27 @@ def read_text_from_file(file_path):
     """
     _, ext = os.path.splitext(file_path)
     ext = ext.lower()
-    
+
+    if ext == '.doc':
+        raise RuntimeError(
+            "Legacy binary .doc files are not supported (Pandoc has no .doc reader). "
+            "Please convert the file to .docx first."
+        )
+
     if ext in PANDOC_FORMATS:
         if not ensure_pandoc():
             raise RuntimeError("Pandoc is required to read this file format, but it is not available.")
-        
+
         logger.info(f"Converting {ext} file to markdown using Pandoc...")
         text = pypandoc.convert_file(file_path, 'md')
         return text, True
-    else:
-        # Standard plain text
-        with open(file_path, 'r', encoding='utf-8') as f:
+
+    # Standard plain text. Try UTF-8 (with BOM handling) first, then fall
+    # back to cp1252 which is common for legacy files on Windows.
+    try:
+        with open(file_path, 'r', encoding='utf-8-sig') as f:
+            return f.read(), False
+    except UnicodeDecodeError:
+        logger.warning(f"{file_path} is not valid UTF-8, falling back to cp1252.")
+        with open(file_path, 'r', encoding='cp1252') as f:
             return f.read(), False

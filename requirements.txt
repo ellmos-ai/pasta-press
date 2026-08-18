@@ -1,4 +1,6 @@
 requests
 click
-
 pypandoc
+
+# Development / testing
+pytest

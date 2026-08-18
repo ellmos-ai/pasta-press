@@ -1,9 +1,0 @@
-{
-    "ollama_host": "http://localhost:11434",
-    "model": "qwen3.5:4b",
-    "output_suffix": "_pasta-press",
-    "default_output_dir": null,
-    "overwrite": false,
-    "queue_file": "queue.json",
-    "log_level": "INFO"
-}
