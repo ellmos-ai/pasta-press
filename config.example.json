@@ -1,0 +1,12 @@
+{
+    "ollama_host": "http://localhost:11434",
+    "model": "llama3.1",
+    "output_suffix": "_pasta-press",
+    "default_output_dir": null,
+    "overwrite": false,
+    "queue_file": "queue.json",
+    "log_level": "INFO",
+    "style": "gleichwertig",
+    "translation_mode": false,
+    "target_language": "English"
+}

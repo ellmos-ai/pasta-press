@@ -10,6 +10,12 @@ env/
 venv/
 ENV/
 
+# Test / tool caches
+.pytest_cache/
+
+# Local user configuration (auto-created on first run; see config.example.json)
+config.json
+
 # Output and queue
 queue.json
 *_pasta-press.*
@@ -18,6 +24,8 @@ queue.json
 .vscode/
 .idea/
 
+# Multi-agent coordination locks
+LOCK*.txt
+
 # Plan D Link
 AUFGABEN.txt
-
