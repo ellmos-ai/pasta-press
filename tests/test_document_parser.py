@@ -19,9 +19,9 @@ def test_utf8_bom_is_stripped(tmp_path):
 
 def test_cp1252_fallback(tmp_path):
     f = tmp_path / "legacy.txt"
-    f.write_bytes("Grüße aus Bernau".encode("cp1252"))
+    f.write_bytes("Grüße mit Umlauten: äöüß".encode("cp1252"))
     text, _ = read_text_from_file(str(f))
-    assert text == "Grüße aus Bernau"
+    assert text == "Grüße mit Umlauten: äöüß"
 
 
 def test_legacy_doc_raises_clear_error(tmp_path):

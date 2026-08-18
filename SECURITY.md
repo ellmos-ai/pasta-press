@@ -6,7 +6,7 @@ Currently, only the `master` branch is supported with security updates.
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 1.0.x   | :white_check_mark: |
+| 1.x     | :white_check_mark: |
 
 ## Reporting a Vulnerability
 
@@ -16,4 +16,4 @@ Do NOT create public issues for security vulnerabilities if this repository is e
 
 ## Data Privacy
 PastaPress processes all text inputs locally by sending them to a locally-hosted Ollama instance. No text data is sent to external cloud APIs or third parties. 
-Ensure that your `config.json` points to an Ollama host you control (`http://localhost:11434` by default on the local network).
+Ensure that your `config.json` points to an Ollama host you control (`http://localhost:11434` by default).
