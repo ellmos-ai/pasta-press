@@ -32,13 +32,14 @@ class LLMClient:
             target_lang_str = CONFIG.get("target_language", "English")
             
         # Determine stylistic instructions
-        style_instruction = "Verbessere den Stil professionell und flüssig."
         if style == "wissenschaftlich":
             style_instruction = "Formuliere den Text auf ein gehobenes, wissenschaftliches und akademisches Niveau um."
         elif style == "einfach":
             style_instruction = "Formuliere den Text in leichter, sehr einfach verständlicher Sprache um (Leichte Sprache)."
         elif style == "kurz":
             style_instruction = "Kürze den Text prägnant und knackig, ohne jedoch wichtige Fakten wegzulassen."
+        elif style == "original":
+            style_instruction = "Behalte den aktuellen Stil, Tonfall und die Länge exakt bei. Nimm keine stilistischen Verbesserungen vor."
         else: # gleichwertig
             style_instruction = "Paraphrasiere den Text auf gleichwertigem Niveau, um den Stil flüssiger und natürlicher zu machen."
 
@@ -46,7 +47,7 @@ class LLMClient:
         if is_translation:
             translation_instruction = f"\nZusätzliche Anweisung: Übersetze den gesamten Text in folgende Sprache: {target_lang_str}."
 
-        system_prompt = f"""Du bist ein KI-Lektorat. Deine Aufgabe ist es, Texte stilistisch zu überarbeiten.
+        system_prompt = f"""Du bist ein KI-Assistent für Textverarbeitung.
 {style_instruction}{translation_instruction}
 
 TOP RULES / OBERSTE REGELN:

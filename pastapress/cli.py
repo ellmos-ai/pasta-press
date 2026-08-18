@@ -14,7 +14,7 @@ def cli():
 @click.option('--overwrite', is_flag=True, help='Overwrite original file.')
 @click.option('--output-dir', type=click.Path(), help='Custom output directory.')
 @click.option('--suffix', type=str, help='Suffix for the output file (if not overwritten).')
-@click.option('--style', type=click.Choice(['gleichwertig', 'wissenschaftlich', 'einfach', 'kurz']), help='Override config style level.')
+@click.option('--style', type=click.Choice(['original', 'gleichwertig', 'wissenschaftlich', 'einfach', 'kurz']), help='Override config style level.')
 @click.option('--translate', type=str, help='Target language (e.g. English) - enables translation mode.')
 def process(input_path, overwrite, output_dir, suffix, style, translate):
     """Process a single file or add all files in a directory to the queue."""
@@ -70,7 +70,7 @@ def process_queue():
 @cli.command()
 @click.argument('text', type=str)
 @click.option('--save-as', type=click.Path(), help='Save output directly to this file path.')
-@click.option('--style', type=click.Choice(['gleichwertig', 'wissenschaftlich', 'einfach', 'kurz']), help='Override config style level.')
+@click.option('--style', type=click.Choice(['original', 'gleichwertig', 'wissenschaftlich', 'einfach', 'kurz']), help='Override config style level.')
 @click.option('--translate', type=str, help='Target language (e.g. English) - enables translation mode.')
 def text(text, save_as, style, translate):
     """Process a direct text string (useful for agent integrations)."""
@@ -88,7 +88,7 @@ def text(text, save_as, style, translate):
 @click.option('--auto', is_flag=True, help='Automatically select the best available model.')
 @click.option('--model', type=str, help='Manually set a specific model.')
 @click.option('--host', type=str, help='Update the Ollama host URL.')
-@click.option('--style', type=click.Choice(['gleichwertig', 'wissenschaftlich', 'einfach', 'kurz']), help='Set default text refinement style.')
+@click.option('--style', type=click.Choice(['original', 'gleichwertig', 'wissenschaftlich', 'einfach', 'kurz']), help='Set default text refinement style.')
 @click.option('--translate-mode', type=click.Choice(['on', 'off']), help='Turn translation mode on or off.')
 @click.option('--lang', type=str, help='Set default target language for translation.')
 def config(auto, model, host, style, translate_mode, lang):

@@ -13,7 +13,7 @@ DEFAULT_CONFIG = {
     "overwrite": False,
     "queue_file": "queue.json",
     "log_level": "INFO",
-    "style": "gleichwertig",  # Options: gleichwertig, wissenschaftlich, einfach, kurz
+    "style": "gleichwertig",  # Options: original, gleichwertig, wissenschaftlich, einfach, kurz
     "translation_mode": False,
     "target_language": "English"
 }
