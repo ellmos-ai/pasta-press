@@ -9,9 +9,9 @@
 *Read this documentation in [German (Deutsch)](README.de.md).*
 
 ## 🌟 Features
-- **Chunk-based Processing:** Processes text files paragraph by paragraph to bypass LLM context limits.
-- **Flawless Reconstruction:** Keeps delimiters and original markdown formatting completely intact.
-- **Format Support:** Supports `.txt`, `.md`, `.json`, `.csv`, `.yaml`, `.tex`, and auto-converts binary formats like `.docx`, `.odt`, `.rtf`, and `.doc` to clean Markdown using `pypandoc`.
+- **Chunk-based Processing:** Processes text files paragraph by paragraph to bypass LLM context limits. Oversized paragraphs are split further at line and word boundaries.
+- **Flawless Reconstruction:** Keeps delimiters, indentation, and original markdown formatting completely intact.
+- **Format Support:** Supports `.txt`, `.md`, `.json`, `.csv`, `.yaml`, `.tex`, and auto-converts binary formats like `.docx`, `.odt`, and `.rtf` to clean Markdown using `pypandoc`. (Legacy binary `.doc` is not supported — convert it to `.docx` first.)
 - **Stylistic Control:** Dynamically adapt the refinement style (`gleichwertig`, `wissenschaftlich`, `einfach`, `kurz`, or `original`).
 - **Translation Mode:** Optionally translate text into any target language on-the-fly while preserving format.
 - **Queue System:** Batch-process entire directories sequentially via `queue.json`.
@@ -29,11 +29,11 @@ pip install -r requirements.txt
 
 ## ⚙️ Configuration
 
-Configure your local Ollama host and default model:
+Configure your local Ollama host and default model (defaults to `http://localhost:11434`; settings are stored in a local, untracked `config.json` — see `config.example.json`):
 ```bash
 python -m pastapress config --auto  # Auto-detects the best model on your host
 # OR
-python -m pastapress config --model qwen3.6:35b-mlx --host http://localhost:11434
+python -m pastapress config --model qwen3.6:35b-mlx --host http://my-ollama-server:11434
 ```
 
 Set your preferred default style and translation settings:

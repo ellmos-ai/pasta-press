@@ -9,9 +9,9 @@
 *Lies diese Dokumentation auf [Englisch (English)](README.md).*
 
 ## 🌟 Funktionen
-- **Chunk-basierte Verarbeitung:** Verarbeitet Textdateien Absatz für Absatz, um Kontext-Limits des LLMs zu umgehen.
-- **Fehlerfreie Rekonstruktion:** Trennzeichen (Delimiters) und Markdown-Formatierungen bleiben exakt erhalten.
-- **Format-Support:** Unterstützt `.txt`, `.md`, `.json`, `.csv`, `.yaml`, `.tex` nativ. Auto-Konvertierung von Binärformaten wie `.docx`, `.odt`, `.rtf` und `.doc` zu sauberem Markdown via `pypandoc`.
+- **Chunk-basierte Verarbeitung:** Verarbeitet Textdateien Absatz für Absatz, um Kontext-Limits des LLMs zu umgehen. Überlange Absätze werden zusätzlich an Zeilen- und Wortgrenzen aufgeteilt.
+- **Fehlerfreie Rekonstruktion:** Trennzeichen (Delimiters), Einrückungen und Markdown-Formatierungen bleiben exakt erhalten.
+- **Format-Support:** Unterstützt `.txt`, `.md`, `.json`, `.csv`, `.yaml`, `.tex` nativ. Auto-Konvertierung von Binärformaten wie `.docx`, `.odt` und `.rtf` zu sauberem Markdown via `pypandoc`. (Das alte Binärformat `.doc` wird nicht unterstützt — bitte zuerst nach `.docx` konvertieren.)
 - **Stil-Kontrolle:** Passe den Veredelungs-Stil dynamisch an (`gleichwertig`, `wissenschaftlich`, `einfach`, `kurz` oder `original`).
 - **Übersetzungs-Modus:** Optionale On-the-Fly-Übersetzung in jede beliebige Zielsprache unter Beibehaltung der Struktur.
 - **Queue-System:** Batch-Verarbeitung ganzer Ordner nacheinander über eine persistente `queue.json`.
@@ -29,11 +29,11 @@ pip install -r requirements.txt
 
 ## ⚙️ Konfiguration
 
-Konfiguriere deinen lokalen Ollama-Host und das Standard-Modell:
+Konfiguriere deinen lokalen Ollama-Host und das Standard-Modell (Standard: `http://localhost:11434`; die Einstellungen liegen in einer lokalen, nicht versionierten `config.json` — siehe `config.example.json`):
 ```bash
 python -m pastapress config --auto  # Sucht automatisch das beste Modell auf dem Host
 # ODER
-python -m pastapress config --model qwen3.6:35b-mlx --host http://localhost:11434
+python -m pastapress config --model qwen3.6:35b-mlx --host http://mein-ollama-server:11434
 ```
 
 Setze deine Standard-Stile und Übersetzungspräferenzen:
