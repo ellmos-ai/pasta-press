@@ -70,3 +70,56 @@ def test_unexpected_response_format_raises(monkeypatch):
 def test_host_trailing_slash_is_normalized():
     client = LLMClient(host="http://test:11434/", model="m")
     assert client.api_url == "http://test:11434/api/chat"
+
+
+def test_thinking_disabled_by_default(monkeypatch):
+    """The payload must carry think=False unless the user enables thinking."""
+    captured = []
+
+    def post(url, json=None, timeout=None):
+        captured.append(json)
+        return FakeResponse({"message": {"content": "ok"}})
+
+    monkeypatch.setattr("pastapress.llm_client.requests.post", post)
+    client = LLMClient(host="http://test:11434", model="m")
+    client.process_text("test")
+
+    assert captured[0].get("think") is False
+
+
+def test_thinking_can_be_enabled_via_config(monkeypatch):
+    from pastapress.config import CONFIG
+    monkeypatch.setitem(CONFIG, "disable_thinking", False)
+    captured = []
+
+    def post(url, json=None, timeout=None):
+        captured.append(json)
+        return FakeResponse({"message": {"content": "ok"}})
+
+    monkeypatch.setattr("pastapress.llm_client.requests.post", post)
+    client = LLMClient(host="http://test:11434", model="m")
+    client.process_text("test")
+
+    assert "think" not in captured[0]
+
+
+def test_think_parameter_fallback_for_unsupporting_models(monkeypatch):
+    """A 400 'does not support thinking' answer must trigger a retry without
+    the think parameter instead of failing."""
+    captured = []
+    responses = [
+        FakeResponse({"error": 'registry.ollama.ai/library/m does not support thinking'}, status_code=400),
+        FakeResponse({"message": {"content": "ok"}}),
+    ]
+
+    def post(url, json=None, timeout=None):
+        captured.append(dict(json))
+        return responses.pop(0)
+
+    monkeypatch.setattr("pastapress.llm_client.requests.post", post)
+    monkeypatch.setattr("pastapress.llm_client.time.sleep", lambda s: None)
+    client = LLMClient(host="http://test:11434", model="m")
+
+    assert client.process_text("test") == "ok"
+    assert captured[0].get("think") is False
+    assert "think" not in captured[1]

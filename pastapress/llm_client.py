@@ -73,11 +73,29 @@ TOP RULES / OBERSTE REGELN:
             "stream": False
         }
 
+        if CONFIG.get("disable_thinking", True):
+            # Skip hidden reasoning chains — mechanical restyling does not
+            # need them and they dominate the latency (~10x measured).
+            payload["think"] = False
+
         last_error = None
         for attempt in range(retries):
             try:
                 logger.debug(f"Sending request to {self.api_url} (Model: {self.model}, Attempt {attempt + 1})")
                 response = requests.post(self.api_url, json=payload, timeout=600)
+
+                # Some models do not support the 'think' parameter; Ollama then
+                # answers 400. Drop the parameter and try again.
+                if response.status_code == 400 and "think" in payload:
+                    try:
+                        err = str(response.json().get("error", ""))
+                    except ValueError:
+                        err = response.text
+                    if "think" in err.lower():
+                        logger.info("Model does not support the 'think' parameter, retrying without it.")
+                        payload.pop("think")
+                        continue
+
                 response.raise_for_status()
 
                 result = response.json()

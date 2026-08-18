@@ -15,7 +15,11 @@ DEFAULT_CONFIG = {
     "log_level": "INFO",
     "style": "gleichwertig",  # Options: original, gleichwertig, wissenschaftlich, einfach, kurz
     "translation_mode": False,
-    "target_language": "English"
+    "target_language": "English",
+    # Thinking-capable models (qwen3.x, deepseek-r1, ...) spend most of their
+    # time on hidden reasoning tokens — measured ~10x slowdown for restyling
+    # work with zero quality benefit. Disabled by default.
+    "disable_thinking": True
 }
 
 def load_config():

@@ -42,6 +42,14 @@ python -m pastapress config --style wissenschaftlich
 python -m pastapress config --translate-mode on --lang "Spanisch"
 ```
 
+Das Modell-Thinking/Reasoning ist standardmäßig deaktiviert (~10–80× schneller bei
+Thinking-fähigen Modellen wie qwen3.x; der Inhalt bleibt erhalten, kleine Modelle
+formulieren aber ggf. etwas holpriger). Wer maximale Sprachqualität statt Tempo
+möchte, schaltet es wieder ein:
+```bash
+python -m pastapress config --thinking on
+```
+
 ## 🛠️ Nutzung
 
 ### Einzelne Datei verarbeiten

@@ -8,5 +8,6 @@
     "log_level": "INFO",
     "style": "gleichwertig",
     "translation_mode": false,
-    "target_language": "English"
+    "target_language": "English",
+    "disable_thinking": true
 }

@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## [1.2.0] - 2026-08-18
+### Added
+- **`disable_thinking` option (default: on)** — thinking-capable models
+  (qwen3.x, deepseek-r1, ...) spend most of their latency on hidden reasoning
+  tokens, pointless for mechanical restyling. Measured on qwen3.5:4b: the same
+  file dropped from 647s to 7.9s (~80x). The client sends `think: false` and
+  transparently falls back for models that reject the parameter. Toggle via
+  `pastapress config --thinking on|off`. Note: on small models, disabling
+  thinking can cost some phrasing quality — content fidelity was unaffected in
+  testing, but grammar got rougher; use `--thinking on` or a larger model when
+  polish matters more than speed.
+
 ## [1.1.0] - 2026-08-18
 ### Fixed
 - **Critical:** `llm_client.py` contained an unterminated triple-quoted string

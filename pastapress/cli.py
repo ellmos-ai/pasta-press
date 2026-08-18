@@ -123,7 +123,8 @@ def text(text, save_as, style, translate):
 @click.option('--style', type=STYLE_CHOICES, help='Set default text refinement style.')
 @click.option('--translate-mode', type=click.Choice(['on', 'off']), help='Turn translation mode on or off.')
 @click.option('--lang', type=str, help='Set default target language for translation.')
-def config(auto, model, host, style, translate_mode, lang):
+@click.option('--thinking', type=click.Choice(['on', 'off']), help="Model reasoning/thinking ('off' is ~10x faster, default).")
+def config(auto, model, host, style, translate_mode, lang, thinking):
     """Configure the Ollama profile and model."""
     from .config import load_config, save_config
     from .ollama_utils import configure_ollama_profile, get_available_models
@@ -151,6 +152,11 @@ def config(auto, model, host, style, translate_mode, lang):
         current_config['target_language'] = lang
         updated = True
         click.echo(f"Updated target_language to: {lang}")
+
+    if thinking:
+        current_config['disable_thinking'] = (thinking == 'off')
+        updated = True
+        click.echo(f"Updated thinking to: {thinking}")
 
     configured_host = current_config.get('ollama_host')
 

@@ -42,6 +42,13 @@ python -m pastapress config --style wissenschaftlich
 python -m pastapress config --translate-mode on --lang "Spanish"
 ```
 
+Model thinking/reasoning is disabled by default (~10-80x faster on thinking-capable
+models like qwen3.x; content stays intact, though small models may phrase things
+slightly rougher). Re-enable it if you prefer maximum polish over speed:
+```bash
+python -m pastapress config --thinking on
+```
+
 ## 🛠️ Usage
 
 ### Process a Single File
