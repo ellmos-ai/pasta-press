@@ -8,6 +8,13 @@
 
 *Lies diese Dokumentation auf [Englisch (English)](README.md).*
 
+## 💡 Einsatzzwecke
+
+- **Texte von ungewollten KI-typischen Markierungen befreien — und den KI-Anteil selbst ausweisen.** Texte werden zunehmend anhand oberflächlicher „KI-Marker" (verräterische Formulierungsmuster und Artefakte) vorverurteilt, unabhängig von ihrer inhaltlichen Substanz. PastaPress schreibt Text durch eine *lokale* Presse neu, sodass er wieder für seinen Inhalt steht — das ehrliche Gegenstück dazu: Den tatsächlichen KI-Anteil weist *man selbst* offen aus, z. B. in der AI-Disclosure eines Wissenschaftsartikels. Transparenz durch Deklaration statt Vorurteil durch Muster.
+- **Rohe Notizen zu lesbarer Prosa veredeln** — Meeting-Notizen, Entwürfe und schnelle Gedankenstützen werden flüssig, während jeder Fakt, jede Liste und jede Überschrift erhalten bleibt.
+- **Übersetzen ohne Strukturbruch** — Markdown, Listen und Trennzeichen überleben die Reise in jede Zielsprache.
+- **Ganze Ordner im Batch pressen** — Verzeichnis in die Queue, laufen lassen, Originale bleiben erhalten.
+
 ## 🌟 Funktionen
 - **Chunk-basierte Verarbeitung:** Verarbeitet Textdateien Absatz für Absatz, um Kontext-Limits des LLMs zu umgehen. Überlange Absätze werden zusätzlich an Zeilen- und Wortgrenzen aufgeteilt.
 - **Fehlerfreie Rekonstruktion:** Trennzeichen (Delimiters), Einrückungen und Markdown-Formatierungen bleiben exakt erhalten.
@@ -78,3 +85,13 @@ python -m pastapress text "Das is ein echt mieser Text der hilfe braucht."
 - **Lokale Verarbeitung:** Alle Daten werden zu 100 % lokal über den konfigurierten Ollama-Host verarbeitet (Standard: `http://localhost:11434`).
 - **Keine Telemetrie:** Es werden keine Daten an Cloud-Anbieter oder Drittanbieter-APIs gesendet.
 - **Smart Filtering:** (Geplant - siehe `ROADMAP.md`) Zukünftige Versionen bieten striktes Code-Filtering, damit sensible Tags/Code-Snippets erst gar nicht an das LLM gesendet werden.
+
+## 📄 Lizenz & Herkunft
+
+MIT-Lizenz — gilt für Code, Prompts und Dokumentation dieses Repositories
+(siehe `LICENSE`). Abhängigkeiten (`requests`, `click`, `pypandoc`) werden via
+pip installiert und behalten ihre eigenen Lizenzen.
+
+Dieses Tool wurde KI-gestützt im ellmos-ai-Ökosystem entwickelt und wird mit
+menschlichem Review gepflegt. Zu Zweckbestimmung und EU-AI-Act-Einordnung
+siehe `docs/ai-act-note.md`.

@@ -8,6 +8,13 @@
 
 *Read this documentation in [German (Deutsch)](README.de.md).*
 
+## 💡 Use Cases
+
+- **Free your text from unintended AI-typical markers — and declare the AI share yourself.** Texts are increasingly prejudged by superficial "AI markers" (telltale phrasing patterns and artifacts) regardless of their actual substance. PastaPress rewrites text through a *local* press so it stands on its content again — the honest counterpart being that *you* declare the actual AI involvement openly, e.g. in the AI-disclosure statement of a scientific article. Transparency by declaration instead of prejudice by pattern.
+- **Polish raw notes into readable prose** — meeting notes, drafts, and quick dumps come out fluent while every fact, list, and heading stays intact.
+- **Translate without breaking structure** — Markdown, lists, and delimiters survive the round trip into any target language.
+- **Batch-press whole folders** — queue a directory, let it run, keep the originals.
+
 ## 🌟 Features
 - **Chunk-based Processing:** Processes text files paragraph by paragraph to bypass LLM context limits. Oversized paragraphs are split further at line and word boundaries.
 - **Flawless Reconstruction:** Keeps delimiters, indentation, and original markdown formatting completely intact.
@@ -77,3 +84,13 @@ python -m pastapress text "This is a very bad text that needs fixing."
 - **Local Processing:** All data is processed completely locally via the configured Ollama host (default: `http://localhost:11434`).
 - **No Telemetry:** No data is sent to external clouds or third-party APIs.
 - **Smart Filtering:** (Planned - see `ROADMAP.md`) Future versions will offer strict tag/code filtering to prevent sensitive code chunks from being sent to the LLM.
+
+## 📄 License & Provenance
+
+MIT License — covers the code, prompts, and documentation in this repository
+(see `LICENSE`). Dependencies (`requests`, `click`, `pypandoc`) are installed
+via pip and keep their own licenses.
+
+This tool was developed AI-assisted within the ellmos-ai ecosystem and is
+maintained with human review. See `docs/ai-act-note.md` for scope and intended
+use under the EU AI Act.

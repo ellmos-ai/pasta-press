@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## [1.2.1] - 2026-08-18
+### Changed
+- **Public release.** License switched from proprietary to MIT.
+- README (EN/DE): new "Use Cases" section — including cleaning unintended
+  AI-typical text markers combined with honest AI disclosure.
+- SECURITY.md: public reporting channel (GitHub Security Advisories),
+  documented default host is localhost.
+- New `docs/ai-act-note.md` (scope and intended use under the EU AI Act).
+- Git history rewritten before publication to remove an internal
+  infrastructure address from early commits.
+
 ## [1.2.0] - 2026-08-18
 ### Added
 - **`disable_thinking` option (default: on)** — thinking-capable models
