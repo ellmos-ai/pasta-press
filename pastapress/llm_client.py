@@ -35,7 +35,7 @@ class LLMClient:
         for attempt in range(retries):
             try:
                 logger.debug(f"Sending request to {self.api_url} (Model: {self.model}, Attempt {attempt + 1})")
-                response = requests.post(self.api_url, json=payload, timeout=120)
+                response = requests.post(self.api_url, json=payload, timeout=600)
                 response.raise_for_status()
                 
                 result = response.json()

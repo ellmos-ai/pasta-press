@@ -65,12 +65,47 @@ class PastaPressCore:
             logger.error(f"File not found: {input_path}")
             return False
             
-        with open(input_path, 'r', encoding='utf-8') as f:
-            text = f.read()
+        from .document_parser import read_text_from_file
+        
+        try:
+            text, was_converted = read_text_from_file(input_path)
+        except Exception as e:
+            logger.error(f"Failed to read file: {e}")
+            return False
             
         processed_text = self.process_text_string(text)
         
-        output_path = self.get_output_path(input_path, overwrite, output_dir, suffix)
+        # If it was converted from a binary format, force output extension to .md
+        # because saving it back as .docx with raw markdown text would corrupt the file format.
+        dir_name = os.path.dirname(input_path)
+        base_name = os.path.basename(input_path)
+        name, ext = os.path.splitext(base_name)
+        
+        if was_converted:
+            ext = ".md"
+            # Never overwrite original binary file with a markdown file of the same name but wrong extension
+            # actually we can overwrite but we should rename the extension.
+            # However, --overwrite usually implies exact same file. 
+            # We'll just write it as .md next to it if we converted it, to avoid deleting their docx.
+            if overwrite:
+                logger.warning("Cannot overwrite original binary file directly. Saving as .md instead.")
+                overwrite = False
+                
+        if overwrite:
+            output_path = input_path
+        else:
+            if output_dir is None:
+                output_dir = CONFIG.get("default_output_dir")
+            if suffix is None:
+                suffix = CONFIG.get("output_suffix", "_pasta-press")
+                
+            new_name = f"{name}{suffix}{ext}"
+            target_dir = output_dir if output_dir else dir_name
+            
+            if target_dir and not os.path.exists(target_dir):
+                os.makedirs(target_dir)
+                
+            output_path = os.path.join(target_dir, new_name)
         
         logger.info(f"Saving result to: {output_path}")
         with open(output_path, 'w', encoding='utf-8') as f:
