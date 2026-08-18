@@ -6,7 +6,7 @@ try:
 except ImportError:
     pypandoc = None
 
-SUPPORTED_FORMATS = ['.txt', '.md', '.csv', '.json', '.yaml', '.yml', '.doc', '.docx', '.rtf', '.odt']
+SUPPORTED_FORMATS = ['.txt', '.md', '.csv', '.json', '.yaml', '.yml', '.doc', '.docx', '.rtf', '.odt', '.tex']
 PANDOC_FORMATS = ['.doc', '.docx', '.rtf', '.odt']
 
 def ensure_pandoc():

@@ -1,6 +1,6 @@
 {
     "ollama_host": "http://localhost:11434",
-    "model": "qwen3.6:35b-mlx",
+    "model": "qwen3.5:4b",
     "output_suffix": "_pasta-press",
     "default_output_dir": null,
     "overwrite": false,

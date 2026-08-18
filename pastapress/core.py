@@ -8,7 +8,7 @@ class PastaPressCore:
         self.chunker = TextChunker()
         self.llm = LLMClient()
 
-    def process_text_string(self, text):
+    def process_text_string(self, text, style=None, target_language=None):
         """Verarbeitet einen String direkt über den LLM Workflow."""
         logger.info("Starting text processing...")
         chunks = self.chunker.split_text(text)
@@ -27,13 +27,13 @@ class PastaPressCore:
                     processed_chunks.append((chunk_type, content))
                     continue
                     
-                processed_content = self.llm.process_text(content)
+                processed_content = self.llm.process_text(content, style=style, target_language=target_language)
                 processed_chunks.append((chunk_type, processed_content))
             
         logger.info("Text processing completed.")
         
         final_text = self.chunker.reassemble(processed_chunks)
-        return final_text
+        return self.chunker.reassemble(processed_chunks)
 
     def get_output_path(self, input_path, overwrite=False, output_dir=None, suffix=None):
         if overwrite:
@@ -59,7 +59,7 @@ class PastaPressCore:
             
         return os.path.join(target_dir, new_name)
 
-    def process_file(self, input_path, overwrite=False, output_dir=None, suffix=None):
+    def process_file(self, input_path, overwrite=False, output_dir=None, suffix=None, style=None, target_language=None):
         logger.info(f"Reading file: {input_path}")
         if not os.path.exists(input_path):
             logger.error(f"File not found: {input_path}")
@@ -73,7 +73,7 @@ class PastaPressCore:
             logger.error(f"Failed to read file: {e}")
             return False
             
-        processed_text = self.process_text_string(text)
+        processed_text = self.process_text_string(text, style=style, target_language=target_language)
         
         # If it was converted from a binary format, force output extension to .md
         # because saving it back as .docx with raw markdown text would corrupt the file format.

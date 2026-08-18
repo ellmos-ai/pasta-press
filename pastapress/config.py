@@ -12,7 +12,10 @@ DEFAULT_CONFIG = {
     "default_output_dir": None,
     "overwrite": False,
     "queue_file": "queue.json",
-    "log_level": "INFO"
+    "log_level": "INFO",
+    "style": "gleichwertig",  # Options: gleichwertig, wissenschaftlich, einfach, kurz
+    "translation_mode": False,
+    "target_language": "English"
 }
 
 def load_config():
