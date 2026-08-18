@@ -1,0 +1,23 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.class
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Output and queue
+queue.json
+*_pasta-press.*
+
+# IDEs
+.vscode/
+.idea/
+
+# Plan D Link
+AUFGABEN.txt
+
