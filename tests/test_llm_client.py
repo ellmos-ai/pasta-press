@@ -87,6 +87,27 @@ def test_thinking_disabled_by_default(monkeypatch):
     assert captured[0].get("think") is False
 
 
+def test_equal_style_prompt_is_statistical_paraphrase_without_lossless_claim(monkeypatch):
+    """The default mode must state its narrow purpose without promising losslessness."""
+    captured = []
+
+    def post(url, json=None, timeout=None):
+        captured.append(json)
+        return FakeResponse({"message": {"content": "ok"}})
+
+    monkeypatch.setattr("pastapress.llm_client.requests.post", post)
+    client = LLMClient(host="http://test:11434", model="m")
+    client.process_text("test", style="gleichwertig")
+
+    prompt = captured[0]["messages"][0]["content"]
+    assert "vergleichbarem Bedeutungs-, Informations- und Sprachniveau" in prompt
+    assert "statistische Textmuster" in prompt
+    assert "so vollständig wie möglich" in prompt
+    assert "muss exakt der gleiche bleiben" not in prompt
+    assert "darf weggelassen" not in prompt
+    assert "Markdown und Listen EXAKT" not in prompt
+
+
 def test_thinking_can_be_enabled_via_config(monkeypatch):
     from pastapress.config import CONFIG
     monkeypatch.setitem(CONFIG, "disable_thinking", False)

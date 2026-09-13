@@ -4,23 +4,28 @@
 
 # PastaPress
 
-**PastaPress** is a powerful command-line tool and Python module designed for stylistic text refinement via a local Ollama instance (e.g., Mac Studio). It pushes raw, messy text through an AI "press" and returns refined, smooth text without altering the core facts or structural integrity.
+**PastaPress** is a command-line tool and Python module for stylistic text refinement via a local Ollama instance (e.g., Mac Studio). It pushes raw, messy text through an AI "press" and returns refined, smooth text while aiming to preserve its meaning, information, and structure.
 
 *Read this documentation in [German (Deutsch)](README.de.md).*
 
 ## 💡 Use Cases
 
-- **Free your text from unintended AI-typical markers — and declare the AI share yourself.** Texts are increasingly prejudged by superficial "AI markers" (telltale phrasing patterns and artifacts) regardless of their actual substance. PastaPress rewrites text through a *local* press so it stands on its content again — the honest counterpart being that *you* declare the actual AI involvement openly, e.g. in the AI-disclosure statement of a scientific article. Transparency by declaration instead of prejudice by pattern.
-- **Polish raw notes into readable prose** — meeting notes, drafts, and quick dumps come out fluent while every fact, list, and heading stays intact.
-- **Translate without breaking structure** — Markdown, lists, and delimiters survive the round trip into any target language.
+- **Reduce statistical text-watermark signals through comparable-level paraphrasing — while keeping AI disclosure.** The default `gleichwertig` style rewrites wording at a comparable semantic, informational, and linguistic level. This can reduce statistical patterns in token and phrasing choices; it is not a detector and does not guarantee that every detail is retained or every statistical signal is removed. Declare actual AI involvement wherever disclosure is expected, e.g. in a scientific article.
+- **Polish raw notes into readable prose** — meeting notes, drafts, and quick dumps come out more fluent while the prompt asks the model to retain their information and structure as fully as possible.
+- **Translate while retaining structure where possible** — PastaPress preserves technical chunk boundaries, while the model is instructed to retain Markdown and lists inside translated text.
 - **Batch-press whole folders** — queue a directory, let it run, keep the originals.
+
+PastaPress does **not** scan for or remove literal or invisible Unicode signs,
+embedded marker strings, C2PA data, EXIF/XMP fields, or other file/container
+metadata. LLM paraphrasing is generative, so important output must be reviewed
+against the source. AI-disclosure requirements remain unaffected.
 
 ## 🌟 Features
 - **Chunk-based Processing:** Processes text files paragraph by paragraph to bypass LLM context limits. Oversized paragraphs are split further at line and word boundaries.
-- **Flawless Reconstruction:** Keeps delimiters, indentation, and original markdown formatting completely intact.
+- **Deterministic Chunk Reconstruction:** Reassembles the original delimiters between chunks and their boundary whitespace exactly. Model-generated text inside a chunk can still change facts or formatting; this is not a lossless-content guarantee.
 - **Format Support:** Supports `.txt`, `.md`, `.json`, `.csv`, `.yaml`, `.tex`, and auto-converts binary formats like `.docx`, `.odt`, and `.rtf` to clean Markdown using `pypandoc`. (Legacy binary `.doc` is not supported — convert it to `.docx` first.)
-- **Stylistic Control:** Dynamically adapt the refinement style (`gleichwertig`, `wissenschaftlich`, `einfach`, `kurz`, or `original`).
-- **Translation Mode:** Optionally translate text into any target language on-the-fly while preserving format.
+- **Stylistic Control:** Dynamically adapt the refinement style (`gleichwertig`, `wissenschaftlich`, `einfach`, `kurz`, or `original`). The default `gleichwertig` style targets comparable meaning, information, and language level while varying phrasing.
+- **Translation Mode:** Optionally translate text into any target language on-the-fly while asking the model to retain formatting where possible.
 - **Queue System:** Batch-process entire directories sequentially via `queue.json`.
 
 ## 🚀 Installation
@@ -50,8 +55,9 @@ python -m pastapress config --translate-mode on --lang "Spanish"
 ```
 
 Model thinking/reasoning is disabled by default (~10-80x faster on thinking-capable
-models like qwen3.x; content stays intact, though small models may phrase things
-slightly rougher). Re-enable it if you prefer maximum polish over speed:
+models like qwen3.x; project tests found rougher phrasing on small models, while
+no complete information-retention guarantee is made). Re-enable it if you
+prefer maximum polish over speed:
 ```bash
 python -m pastapress config --thinking on
 ```

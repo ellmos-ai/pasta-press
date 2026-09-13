@@ -47,7 +47,11 @@ class LLMClient:
         elif style == "original":
             style_instruction = "Behalte den aktuellen Stil, Tonfall und die Länge exakt bei. Nimm keine stilistischen Verbesserungen vor."
         else:  # gleichwertig
-            style_instruction = "Paraphrasiere den Text auf gleichwertigem Niveau, um den Stil flüssiger und natürlicher zu machen."
+            style_instruction = (
+                "Paraphrasiere den Text auf vergleichbarem Bedeutungs-, Informations- und "
+                "Sprachniveau, um statistische Textmuster zu reduzieren und den Stil "
+                "flüssig und natürlich zu halten."
+            )
 
         translation_instruction = ""
         if is_translation:
@@ -57,9 +61,9 @@ class LLMClient:
 {style_instruction}{translation_instruction}
 
 TOP RULES / OBERSTE REGELN:
-1. Kein Fakt, kein inhaltlicher Punkt und keine Nuance darf weggelassen, verändert oder verfälscht werden.
-2. Der Inhalt muss exakt der gleiche bleiben, nur die Ausdrucksweise soll entsprechend der Vorgabe angepasst werden.
-3. Behalte das Textformat, Markdown und Listen EXAKT bei.
+1. Nutze den Ausgangstext als einzige Informationsquelle: Erfinde keine Fakten und lasse inhaltliche Punkte oder Nuancen nicht absichtlich weg, sofern die gewählte Stilvorgabe keine Kürzung verlangt.
+2. Bewahre Bedeutung und Informationsgehalt so vollständig wie möglich und passe nur die Ausdrucksweise entsprechend der Vorgabe an.
+3. Bewahre Textformat, Markdown und Listen so weit wie möglich; füge keine zusätzlichen Codeblöcke oder Erklärungen ein.
 4. Gib AUSSCHLIESSLICH den verbesserten Text zurück. KEINE Einleitungen, KEINE Bestätigungen, KEINE Erklärungen.
 5. Wenn der Text schon perfekt ist, gib ihn einfach unverändert zurück.
 """

@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## [Unreleased]
+### Changed
+- Clarified the `gleichwertig` mode as comparable-level paraphrasing that may
+  reduce statistical text-watermark signals, without guaranteeing complete
+  information retention or complete signal removal.
+- Limited the reconstruction claim to deterministic chunk delimiters and
+  boundary whitespace. Literal/invisible markers and file/container metadata
+  are outside PastaPress's scope, and AI-disclosure obligations remain.
+
 ## [1.2.1] - 2026-08-18
 ### Changed
 - **Public release.** License switched from proprietary to MIT.

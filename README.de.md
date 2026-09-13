@@ -4,23 +4,29 @@
 
 # PastaPress
 
-**PastaPress** ist ein leistungsstarkes Kommandozeilen-Tool und Python-Modul zur stilistischen Textveredelung via lokaler Ollama-Instanz (z. B. auf dem Mac Studio). Es drückt rohen, holprigen Text durch eine KI-"Presse" und liefert sauberen, professionellen Text zurück, ohne die Kernfakten oder die Struktur zu verändern.
+**PastaPress** ist ein Kommandozeilen-Tool und Python-Modul zur stilistischen Textveredelung via lokaler Ollama-Instanz (z. B. auf dem Mac Studio). Es drückt rohen, holprigen Text durch eine KI-„Presse“ und liefert sauberen, professionellen Text zurück – mit dem Ziel, Bedeutung, Informationen und Struktur zu bewahren.
 
 *Lies diese Dokumentation auf [Englisch (English)](README.md).*
 
 ## 💡 Einsatzzwecke
 
-- **Texte von ungewollten KI-typischen Markierungen befreien — und den KI-Anteil selbst ausweisen.** Texte werden zunehmend anhand oberflächlicher „KI-Marker" (verräterische Formulierungsmuster und Artefakte) vorverurteilt, unabhängig von ihrer inhaltlichen Substanz. PastaPress schreibt Text durch eine *lokale* Presse neu, sodass er wieder für seinen Inhalt steht — das ehrliche Gegenstück dazu: Den tatsächlichen KI-Anteil weist *man selbst* offen aus, z. B. in der AI-Disclosure eines Wissenschaftsartikels. Transparenz durch Deklaration statt Vorurteil durch Muster.
-- **Rohe Notizen zu lesbarer Prosa veredeln** — Meeting-Notizen, Entwürfe und schnelle Gedankenstützen werden flüssig, während jeder Fakt, jede Liste und jede Überschrift erhalten bleibt.
-- **Übersetzen ohne Strukturbruch** — Markdown, Listen und Trennzeichen überleben die Reise in jede Zielsprache.
+- **Statistische Textwatermark-Signale durch Paraphrasierung auf vergleichbarem Niveau reduzieren – bei fortbestehender KI-Offenlegung.** Der Standardstil `gleichwertig` formuliert auf vergleichbarem Bedeutungs-, Informations- und Sprachniveau um. Dadurch können statistische Muster in Token- und Formulierungswahl reduziert werden; PastaPress ist jedoch kein Detektor und garantiert weder den vollständigen Erhalt jedes Details noch die vollständige Entfernung aller statistischen Signale. Der tatsächliche KI-Anteil ist weiterhin überall offenzulegen, wo dies erwartet wird, etwa in wissenschaftlichen Artikeln.
+- **Rohe Notizen zu lesbarer Prosa veredeln** – Meeting-Notizen, Entwürfe und schnelle Gedankenstützen werden flüssiger; der Prompt weist das Modell an, Informationen und Struktur so vollständig wie möglich zu bewahren.
+- **Unter möglichst weitgehender Strukturerhaltung übersetzen** – PastaPress bewahrt technische Chunk-Grenzen; innerhalb des übersetzten Textes soll das Modell Markdown und Listen erhalten.
 - **Ganze Ordner im Batch pressen** — Verzeichnis in die Queue, laufen lassen, Originale bleiben erhalten.
+
+PastaPress sucht oder entfernt **keine** wörtlichen oder unsichtbaren
+Unicode-Zeichen, eingebetteten Marker-Zeichenketten, C2PA-Daten, EXIF-/XMP-Felder
+oder sonstigen Datei-/Container-Metadaten. LLM-Paraphrasierung ist generativ;
+wichtige Ausgaben müssen daher mit dem Ausgangstext abgeglichen werden.
+Pflichten zur KI-Offenlegung bleiben unberührt.
 
 ## 🌟 Funktionen
 - **Chunk-basierte Verarbeitung:** Verarbeitet Textdateien Absatz für Absatz, um Kontext-Limits des LLMs zu umgehen. Überlange Absätze werden zusätzlich an Zeilen- und Wortgrenzen aufgeteilt.
-- **Fehlerfreie Rekonstruktion:** Trennzeichen (Delimiters), Einrückungen und Markdown-Formatierungen bleiben exakt erhalten.
+- **Deterministische Chunk-Rekonstruktion:** Die ursprünglichen Trennzeichen zwischen Chunks und deren Rand-Leerraum werden exakt wieder zusammengesetzt. Modellgenerierter Text innerhalb eines Chunks kann Fakten oder Formatierungen dennoch verändern; dies ist keine Garantie verlustfreier Inhalte.
 - **Format-Support:** Unterstützt `.txt`, `.md`, `.json`, `.csv`, `.yaml`, `.tex` nativ. Auto-Konvertierung von Binärformaten wie `.docx`, `.odt` und `.rtf` zu sauberem Markdown via `pypandoc`. (Das alte Binärformat `.doc` wird nicht unterstützt — bitte zuerst nach `.docx` konvertieren.)
-- **Stil-Kontrolle:** Passe den Veredelungs-Stil dynamisch an (`gleichwertig`, `wissenschaftlich`, `einfach`, `kurz` oder `original`).
-- **Übersetzungs-Modus:** Optionale On-the-Fly-Übersetzung in jede beliebige Zielsprache unter Beibehaltung der Struktur.
+- **Stil-Kontrolle:** Passe den Veredelungsstil dynamisch an (`gleichwertig`, `wissenschaftlich`, `einfach`, `kurz` oder `original`). Der Standardstil `gleichwertig` zielt bei veränderter Formulierung auf ein vergleichbares Bedeutungs-, Informations- und Sprachniveau.
+- **Übersetzungs-Modus:** Optionale On-the-Fly-Übersetzung in jede beliebige Zielsprache mit der Anweisung an das Modell, Formatierungen möglichst beizubehalten.
 - **Queue-System:** Batch-Verarbeitung ganzer Ordner nacheinander über eine persistente `queue.json`.
 
 ## 🚀 Installation
@@ -50,9 +56,10 @@ python -m pastapress config --translate-mode on --lang "Spanisch"
 ```
 
 Das Modell-Thinking/Reasoning ist standardmäßig deaktiviert (~10–80× schneller bei
-Thinking-fähigen Modellen wie qwen3.x; der Inhalt bleibt erhalten, kleine Modelle
-formulieren aber ggf. etwas holpriger). Wer maximale Sprachqualität statt Tempo
-möchte, schaltet es wieder ein:
+Thinking-fähigen Modellen wie qwen3.x; Projekttests zeigten bei kleinen Modellen
+holprigere Formulierungen, eine Garantie vollständigen Informationserhalts wird
+jedoch nicht gegeben). Wer maximale Sprachqualität statt Tempo möchte, schaltet
+es wieder ein:
 ```bash
 python -m pastapress config --thinking on
 ```
