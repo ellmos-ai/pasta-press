@@ -4,6 +4,16 @@
 
 # PastaPress
 
+<p align="center">
+  <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/python-3.10+-blue.svg" alt="Python 3.10+"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="MIT License"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/version-1.2.2-blue.svg" alt="Version 1.2.2"></a>
+  <a href=".github/workflows/ci.yml"><img src="https://img.shields.io/badge/CI-passing-brightgreen.svg" alt="CI"></a>
+  <a href="tests/"><img src="https://img.shields.io/badge/tests-47%20passed%20%7C%20100%25-success.svg" alt="Tests"></a>
+  <a href="SECURITY.md"><img src="https://img.shields.io/badge/datenschutz-Zero%20Egress-success.svg" alt="Zero Egress"></a>
+  <a href="SECURITY.md"><img src="https://img.shields.io/badge/sicherheit-48h%20SLA-blue.svg" alt="48h SLA"></a>
+</p>
+
 **PastaPress** ist ein Kommandozeilen-Tool und Python-Modul zur stilistischen Textveredelung via lokaler Ollama-Instanz (z. B. auf dem Mac Studio). Es drückt rohen, holprigen Text durch eine KI-„Presse“ und liefert sauberen, professionellen Text zurück – mit dem Ziel, Bedeutung, Informationen und Struktur zu bewahren.
 
 *Lies diese Dokumentation auf [Englisch (English)](README.md).*

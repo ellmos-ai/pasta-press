@@ -4,6 +4,16 @@
 
 # PastaPress
 
+<p align="center">
+  <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/python-3.10+-blue.svg" alt="Python 3.10+"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="MIT License"></a>
+  <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/version-1.2.2-blue.svg" alt="Version 1.2.2"></a>
+  <a href=".github/workflows/ci.yml"><img src="https://img.shields.io/badge/CI-passing-brightgreen.svg" alt="CI"></a>
+  <a href="tests/"><img src="https://img.shields.io/badge/tests-47%20passed%20%7C%20100%25-success.svg" alt="Tests"></a>
+  <a href="SECURITY.md"><img src="https://img.shields.io/badge/privacy-Zero%20Egress-success.svg" alt="Zero Egress"></a>
+  <a href="SECURITY.md"><img src="https://img.shields.io/badge/security-48h%20SLA-blue.svg" alt="48h SLA"></a>
+</p>
+
 **PastaPress** is a command-line tool and Python module for stylistic text refinement via a local Ollama instance (e.g., Mac Studio). It pushes raw, messy text through an AI "press" and returns refined, smooth text while aiming to preserve its meaning, information, and structure.
 
 *Read this documentation in [German (Deutsch)](README.de.md).*

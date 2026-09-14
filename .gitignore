@@ -1,7 +1,32 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+*$py.class
 *.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+wheelhouse/
+.wheel-smoke/
 
 # Environments
 .env
@@ -9,9 +34,21 @@ __pycache__/
 env/
 venv/
 ENV/
+env.bak/
+venv.bak/
 
-# Test / tool caches
+# Test, lint, coverage and tool caches
 .pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+coverage/
+htmlcov/
+.hypothesis/
+.turbo/
 
 # Local user configuration (auto-created on first run; see config.example.json)
 config.json
@@ -20,12 +57,41 @@ config.json
 queue.json
 *_pasta-press.*
 
-# IDEs
+# IDEs and OS artifacts
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# Multi-Host Cloud-Sync & Conflict Hardening
+* (kopie)*
+* (copy)*
+* (Kopie)*
+* (Copy)*
+*conflicted copy*
+*-WORKSTATION*
+*-WORKSTATION-LG*
+*-ASUS*
+*-ASUS-GEI*
+*-LAPTOP*
+*-Mac Studio*
+*.sync-temp-*
+*.sync-conflict-*
+*.conflict
+*.orig
 
 # Multi-agent coordination locks
+LOCK
+LOCK.*
 LOCK*.txt
+LOCK.permissions.json
+*.lock
+uv.lock
+!package-lock.json
 
 # Plan D Link
 AUFGABEN.txt

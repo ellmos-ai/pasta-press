@@ -1,13 +1,19 @@
 # CHANGELOG
 
-## [Unreleased]
+## [1.2.2] - 2026-09-14
+### Added
+- Standardized PEP 621 packaging metadata in `pyproject.toml` with console script entry point `pastapress = pastapress.cli:cli`.
+- Hardened CI workflows in `.github/workflows/` (`ci.yml` with multi-OS Ubuntu/Windows & Python 3.10-3.13 matrix, `stale.yml`, `welcome.yml`) featuring explicit execution timeouts and concurrency cancellation.
+- Automated contract test suite in `tests/test_repository_hygiene.py` validating gitignore patterns, CI workflow timeouts, PEP 621 URLs, version parity, and security policy invariants.
+- LLM Context Index `llms.txt` and local marketing documentation `MARKETING-LOG.txt` outlining value proposition, 4 target personas, and 10-dimension comparative matrix.
+- `__version__` attribute exposed in `pastapress` top-level package.
+
 ### Changed
-- Clarified the `gleichwertig` mode as comparable-level paraphrasing that may
-  reduce statistical text-watermark signals, without guaranteeing complete
-  information retention or complete signal removal.
-- Limited the reconstruction claim to deterministic chunk delimiters and
-  boundary whitespace. Literal/invisible markers and file/container metadata
-  are outside PastaPress's scope, and AI-disclosure obligations remain.
+- Clarified the `gleichwertig` mode as comparable-level paraphrasing that may reduce statistical text-watermark signals, without guaranteeing complete information retention or complete signal removal.
+- Limited the reconstruction claim to deterministic chunk delimiters and boundary whitespace. Literal/invisible markers and file/container metadata are outside PastaPress's scope, and AI-disclosure obligations remain.
+- Enhanced `SECURITY.md` with explicit 48-hour response SLA, unprivileged user mode (`RunAsInvoker`), and Zero External Network Egress guarantee.
+- Hardened `.gitignore` against multi-host sync conflict copies, lock files, and temporary test/cache directories.
+- Cleaned unused imports in CLI and test modules.
 
 ## [1.2.1] - 2026-08-18
 ### Changed

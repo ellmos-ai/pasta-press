@@ -2,7 +2,7 @@ import click
 import os
 from .core import PastaPressCore
 from .queue_manager import QueueManager
-from .config import CONFIG, logger
+from .config import CONFIG
 from .document_parser import SUPPORTED_FORMATS
 
 STYLE_CHOICES = click.Choice(['original', 'gleichwertig', 'wissenschaftlich', 'einfach', 'kurz'])

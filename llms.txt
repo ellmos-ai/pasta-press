@@ -1,0 +1,53 @@
+# pasta-press
+> Stylistic text refinement, paraphrasing, and translation via local Ollama instances with deterministic chunk reconstruction.
+
+## Metadata
+- Version: 1.2.2
+- License: MIT
+- Last-checked: 2026-09-14
+- Status: Active development
+- Repository: https://github.com/ellmos-ai/pasta-press
+
+## Core Modules & API
+
+- `pastapress.core`:
+  - `PastaPressCore()`: Orchestrates file and text processing workflows.
+  - `process_text_string(text, style=None, target_language=None)` -> `str`: Processes text chunk-by-chunk via LLM while preserving boundary whitespace and delimiters.
+  - `process_file(input_file, overwrite=False, output_dir=None, suffix=None, style=None, target_language=None)` -> `bool`: End-to-end file ingestion, parsing, chunk processing, and writing.
+  - Tracks `last_failed_chunks` and `last_total_chunks` for transparent failure reporting.
+
+- `pastapress.chunker`:
+  - `TextChunker(max_chars=2000)`: Splits document into text and delimiter chunks by double newlines or oversized paragraph boundaries.
+  - `reassemble(chunks)` -> `str`: Reconstructs the complete document with exact delimiter integrity.
+
+- `pastapress.llm_client`:
+  - `LLMClient()`: Communicates with local Ollama HTTP API (`/api/generate` and `/api/tags`).
+  - Supports `disable_thinking=True` for ~10-80x speedups on reasoning-capable models (e.g., Qwen 3.x, DeepSeek-R1).
+  - Handles retries and raises `LLMProcessingError` on connection exhaustion.
+
+- `pastapress.document_parser`:
+  - Reads native text formats (`.txt`, `.md`, `.markdown`, `.csv`, `.json`, `.yaml`, `.yml`, `.tex`).
+  - Converts binary document formats (`.docx`, `.odt`, `.rtf`) to Markdown via `pypandoc`. Rejects legacy binary `.doc` with actionable error.
+
+- `pastapress.queue_manager`:
+  - `QueueManager(queue_file="queue.json")`: Enqueues and tracks batch processing tasks for directory runs.
+
+- `pastapress.cli`:
+  - Click CLI providing `pastapress process`, `pastapress config`, `pastapress queue`, `pastapress models`, and `pastapress version`.
+
+## Key Invariants
+- **INV-LOCAL-01 (Zero Egress):** Operates 100% locally against configured Ollama instance (`localhost:11434` default); zero telemetry, zero third-party cloud calls.
+- **INV-LOCAL-02 (Unprivileged):** Runs as `RunAsInvoker` without requiring elevated system privileges.
+- **INV-LOCAL-03 (Permissive Licensing):** MIT license; all runtime dependencies are permissively licensed.
+- **INV-LOCAL-04 (Deterministic Reassembly):** Chunk delimiters and boundary whitespace are strictly preserved.
+- **INV-LOCAL-05 (Transparent Failure):** Chunks that fail LLM processing are retained in original form; partial failures are explicitly reported.
+- **INV-LOCAL-06 (Disclosure Compliance):** Paraphrasing is generative; output is not guaranteed to strip all statistical watermark signals; AI-disclosure obligations remain with the user.
+- **INV-LOCAL-07 (Multi-Host Sync Safe):** Repository protected against conflict files and multi-agent lock collisions.
+- **INV-LOCAL-08 (PEP 621 Standardized):** Build metadata and tool configurations standardized in `pyproject.toml`.
+- **INV-LOCAL-09 (Version Parity):** Unified version numbering across package, manifests, changelog, and documentation.
+- **INV-LOCAL-10 (48h Security SLA):** Documented vulnerability response policy.
+
+## Verification Commands
+- `python -m pytest -ra -v`: Run full contract and unit test suite.
+- `python -m ruff check .`: Lint Python source files.
+- `python -m compileall -q pastapress tests docs`: Validate Python syntax.

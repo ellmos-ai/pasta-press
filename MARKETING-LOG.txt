@@ -1,0 +1,79 @@
+# MARKETING-LOG — pasta-press (Stylistic Text Refinement via Local Ollama)
+# Stand: 2026-09-14 | Repository: ellmos-ai/pasta-press | Lizenz: MIT | Version: 1.2.2
+
+## 1. Positionierung & Kernnutzen (Value Proposition)
+
+`pasta-press` ist das lokale, deterministische CLI-Werkzeug und Python-Modul für stilistische Textverfeinerung, Paraphrasierung und Übersetzung über lokale Ollama-Instanzen.
+
+Anwendungsfall & Kernproblem:
+Rohe Notizen, technische Entwürfe, Übersetzungen oder LLM-Erstfassungen sind oft holprig, enthalten wiederholte Floskeln oder überschreiten Kontextgrenzen von LLMs. Herkömmliche Lösungen weisen wesentliche Defizite auf:
+- Externe Cloud-Dienste (QuillBot, Grammarly) verletzen Datenschutzrichtlinien durch unzulässigen Datenabfluss sensibler Texte.
+- Naive LLM-Prompts zerschlagen Formatierungen, verschlucken Markdown-Listen oder brechen an langen Dokumenten ab.
+- Denk-Modelle (wie Qwen 3.x, DeepSeek-R1) verschwenden bis zu 95% der Rechenzeit auf unsichtbare Reasoning-Tokens ohne Mehrwert für stilistisches Refinement.
+- Paraphrasierungswerkzeuge versprechen oft fälschlicherweise "Watermark-Freiheit", verletzen Offenlegungspflichten oder führen zu stillem Datenverlust bei Verbindungsabbrüchen.
+
+`pasta-press` löst diese Hürden systematisch:
+1. **Deterministische Chunk-Rekonstruktion**: Teilt Dokumente absatzbasiert auf, bewahrt Trennzeichen und Rand-Whitespace exakt und setzt das Gesamtdokument bruchlos zusammen.
+2. **Local-First & Zero Egress**: 100% lokale Ausführung über Ollama (`localhost:11434` oder privates LAN wie Mac Studio). Keine Telemetrie, keine Cloud-APIs.
+3. **`disable_thinking` Optimierung**: Schaltet standardmäßig hidden reasoning tokens ab — gemessene 10-80x Beschleunigung auf Denkmodellen bei erhaltener Phrasierungsqualität.
+4. **Formatvielfalt & Pandoc-Bridge**: Verarbeitet native Textformate (`.txt`, `.md`, `.json`, `.csv`, `.yaml`, `.tex`) sowie Binärformate (`.docx`, `.odt`, `.rtf`) über automatische Pandoc-Konvertierung.
+5. **Transparente Fehlerbehandlung**: Fehlgeschlagene Chunks werden im Originaltext beibehalten und gezählt; kein stiller Datenverlust.
+
+---
+
+## 2. Ziel-Personas (Target Audience)
+
+1. **[PERSONA-01] Local LLM & Ollama Power Users**
+   - Nutzer mit lokaler Hardware (Mac Studio, Linux/Windows GPU-Workstations), die Texte ohne Cloud-Kosten und Latenz veredeln wollen.
+   - Profitieren von Modell-Autodetektion, flexibler Host-Konfiguration und 80x Geschwindigkeitsvorteil durch `disable_thinking`.
+
+2. **[PERSONA-02] Technical Writers, Researchers & Translators**
+   - Autoren und Wissenschaftler, die Rohentwürfe in flüssige Prosa überführen oder Texte unter Beibehaltung von Markdown-Strukturen übersetzen müssen.
+   - Profitieren von den Stilstufen (`gleichwertig`, `wissenschaftlich`, `einfach`, `kurz`) und ehrlichen Offenlegungsrichtlinien.
+
+3. **[PERSONA-03] Privacy-Conscious Organizations & Enterprise Authors**
+   - Unternehmen und Behörden, deren Textinhalte (Verträge, Berichte, Notizen) keine externen Server verlassen dürfen.
+   - Profitieren von Zero-Egress-Garantie und unprivilegierter Ausführung (`RunAsInvoker`).
+
+4. **[PERSONA-04] Autonomous Multi-Agent & Pipeline Architects**
+   - Entwickler von automatisierten Dokumenten-Pipelines, die ein stabiles Python-API (`PastaPressCore`) und Batch-Queueing (`queue.json`) benötigen.
+
+---
+
+## 3. Vergleichsmatrix gegenüber 4 Alternativen
+
+| Dimension | pasta-press | Cloud Paraphraser (QuillBot etc.) | Naives Ollama-Skript | Schwere Agenten-Frameworks |
+|---|---|---|---|---|
+| **Datenschutz / Egress** | Zero Egress (100% lokal) | Cloud-Zwang (PII-Leakage-Risiko) | Lokal | Variabel (oft Cloud-Voreinstellung) |
+| **Chunk-Rekonstruktion** | Deterministisch & verlustfrei | Blackbox | Fehlt (Kontext-Truncation) | Komplex / unvorhersehbar |
+| **Thinking-Optimierung** | Ja (`disable_thinking` default, 80x) | N/A | Nein (hohe Latenz auf R1/Qwen) | Selten integriert |
+| **Format-Unterstützung** | Text + Pandoc (.docx, .odt, .rtf) | Nur Text / Copy-Paste | Nur Text | Benötigt viele Plugins |
+| **Lizenz** | MIT (100% Open Source) | Proprietär / Abo | Variabel | Oft komplexe Lizenzen |
+| **Batch-Verarbeitung** | Ja (Verzeichnis-Modus + Queue) | Manuell / Paywall | Fehlt | Ja |
+| **Transparenz bei Fehlern** | Original-Fallback + Chunk-Zähler | Stummer Fehler | Absturz | Verdeckte Wiederholungen |
+| **Unprivilegierte Ausführung** | Ja (`RunAsInvoker`) | N/A (Webdienst) | Ja | Oft Docker/Root empfohlen |
+| **Multi-Host & Sync-Schutz** | Ja (gehärtete .gitignore) | Nein | Nein | Nein |
+| **Verlässliche Vertragstests** | Ja (automatisierte Hygiene-Tests) | Nein | Nein | Teilweise |
+
+---
+
+## 4. Discoverability & SEO-Keywords
+
+`pasta-press`, `text-refinement`, `paraphrasing`, `local-llm`, `ollama`, `mac-studio`,
+`markdown`, `pandoc`, `docx-to-markdown`, `translation`, `qwen`, `deepseek-r1`,
+`disable-thinking`, `zero-egress`, `privacy-first`, `mit-license`, `ellmos-ai`
+
+---
+
+## 5. Audit & Governance-Invarianten (Stand 2026-09-14)
+
+- **INV-LOCAL-01**: Keine externen Netzanfragen (Zero Egress, ausschließlich lokale/interne Ollama-Instanz).
+- **INV-LOCAL-02**: Unprivilegierte Ausführung (`RunAsInvoker`).
+- **INV-LOCAL-03**: 100% permissive MIT-Lizenzierung ohne Copyleft-Überraschungen.
+- **INV-LOCAL-04**: Deterministische Chunk-Trennzeichen- und Randwhitespace-Wiederherstellung.
+- **INV-LOCAL-05**: Fehlgeschlagene Chunks verbleiben im Original; partielle Ausfälle werden quantifiziert gemeldet.
+- **INV-LOCAL-06**: Ehrliche Offenlegungsrichtlinie: Keine unhaltbaren "Watermark-Immunitäts"-Versprechen; KI-Kennzeichnungspflichten bleiben aufrecht.
+- **INV-LOCAL-07**: Multi-Host Sync-Schutz und Gitignore-Härtung aktiv.
+- **INV-LOCAL-08**: PEP 621 Standardisierung in `pyproject.toml`.
+- **INV-LOCAL-09**: Version 1.2.2 über alle Manifeste, Module und Dokumente harmonisiert.
+- **INV-LOCAL-10**: 48h SLA für Sicherheits- und Integritätsmeldungen in `SECURITY.md`.

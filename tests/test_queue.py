@@ -1,6 +1,3 @@
-import os
-import json
-import pytest
 from pastapress.queue_manager import QueueManager
 
 def test_queue_manager_add_and_pop(tmp_path):
