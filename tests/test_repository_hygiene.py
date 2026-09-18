@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import compileall
 from pathlib import Path
+import re
 import tomllib
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -125,3 +126,74 @@ def test_syntax_compilation():
     erfolg = erfolg and compileall.compile_dir(str(ROOT / "tests"), quiet=1)
     erfolg = erfolg and compileall.compile_dir(str(ROOT / "docs"), quiet=1)
     assert erfolg, "Syntaxfehler bei compileall gefunden"
+
+
+def test_bilingual_readme_anchors_and_personas():
+    """README.md und README.de.md müssen Navigationsanker und Personas enthalten."""
+    readme_en = (ROOT / "README.md").read_text(encoding="utf-8")
+    readme_de = (ROOT / "README.de.md").read_text(encoding="utf-8")
+
+    erwartete_anker = [
+        "system-architecture",
+        "processing-lifecycle",
+        "governance-and-runtime-invariants",
+        "target-personas-and-seo",
+        "comparison-matrix",
+        "use-cases",
+        "features",
+        "installation",
+        "configuration",
+        "usage",
+        "privacy-and-data-security",
+        "sibling-ecosystem",
+        "verification",
+        "license-and-provenance",
+    ]
+    for anker in erwartete_anker:
+        assert f'id="{anker}"' in readme_en, f"Anker {anker} fehlt in README.md"
+        assert f'id="{anker}"' in readme_de, f"Anker {anker} fehlt in README.de.md"
+
+    for persona in ["[PERSONA-01]", "[PERSONA-02]", "[PERSONA-03]", "[PERSONA-04]"]:
+        assert persona in readme_en, f"Persona {persona} fehlt in README.md"
+        assert persona in readme_de, f"Persona {persona} fehlt in README.de.md"
+
+
+def test_mermaid_diagrams_syntax_and_guardrails():
+    """READMEs müssen syntaktisch saubere Mermaid-Diagramme enthalten."""
+    readme_en = (ROOT / "README.md").read_text(encoding="utf-8")
+    readme_de = (ROOT / "README.de.md").read_text(encoding="utf-8")
+
+    for datei_name, inhalt in [("README.md", readme_en), ("README.de.md", readme_de)]:
+        assert "```mermaid\ngraph TD" in inhalt, f"Graph TD fehlt in {datei_name}"
+        assert "```mermaid\nsequenceDiagram" in inhalt, f"SequenceDiagram fehlt in {datei_name}"
+        assert "autonumber" in inhalt, f"Autonumber fehlt in SequenceDiagram von {datei_name}"
+
+        # Sequenzdiagramm darf keine Semikolons im Nachrichtentext enthalten
+        in_seq = False
+        for line in inhalt.splitlines():
+            if "sequenceDiagram" in line:
+                in_seq = True
+            elif in_seq and line.strip() == "```":
+                in_seq = False
+            elif in_seq:
+                if "->>" in line or "-->>" in line or ": " in line:
+                    clean_line = re.sub(r"&[a-zA-Z0-9#]+;", "", line)
+                    assert ";" not in clean_line, f"Semikolon in Sequenzzeile bricht GitHub: {line}"
+
+
+def test_third_party_licenses_manifest():
+    """THIRD_PARTY_LICENSES.md muss existieren und Abhängigkeiten + Invarianten aufführen."""
+    manifest = ROOT / "THIRD_PARTY_LICENSES.md"
+    assert manifest.is_file(), "THIRD_PARTY_LICENSES.md fehlt"
+    inhalt = manifest.read_text(encoding="utf-8")
+    for dep in ["requests", "click", "pypandoc", "Pandoc", "RunAsInvoker"]:
+        assert dep in inhalt, f"{dep} fehlt in THIRD_PARTY_LICENSES.md"
+    for inv in ["INV-LOCAL-01", "INV-LOCAL-10"]:
+        assert inv in inhalt, f"{inv} fehlt in THIRD_PARTY_LICENSES.md"
+
+
+def test_statutory_bgb_notice():
+    """README.de.md muss die § 521 BGB Gefälligkeitsklausel enthalten."""
+    readme_de = (ROOT / "README.de.md").read_text(encoding="utf-8")
+    assert "§ 521 BGB" in readme_de, "§ 521 BGB Hinweis fehlt in README.de.md"
+    assert "Gefälligkeitsrecht" in readme_de or "Gefälligkeit" in readme_de, "Gefälligkeitsrecht fehlt in README.de.md"

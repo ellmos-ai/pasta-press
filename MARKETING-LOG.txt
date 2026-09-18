@@ -77,3 +77,23 @@ Rohe Notizen, technische Entwürfe, Übersetzungen oder LLM-Erstfassungen sind o
 - **INV-LOCAL-08**: PEP 621 Standardisierung in `pyproject.toml`.
 - **INV-LOCAL-09**: Version 1.2.2 über alle Manifeste, Module und Dokumente harmonisiert.
 - **INV-LOCAL-10**: 48h SLA für Sicherheits- und Integritätsmeldungen in `SECURITY.md`.
+
+---
+
+## 6. Pfad B Discoverability & Design Audit (Stand 2026-09-18)
+
+- **Audit-Ergebnis**: PASS (100% konform mit Pfad B Standards).
+- **Zweisprachige Navigationsparität**: 14 symmetrische Navigationsanker mit reziproken HTML-Ankern (`<a id="..."></a>`) in `README.md` und `README.de.md`.
+- **Visuelle Architektur & Lebenszyklus**:
+  - `flowchart TD` Systemtopologie mit 5 Schichten (Input, Parser, Chunker, Core, Ollama, Reassembler, Output).
+  - `sequenceDiagram` Verarbeitungs-Lebenszyklus mit `autonumber` und null Semikolons (GitHub-Rendering-Garantie).
+  - Beide Diagramme geprüft via `_tools/lint_mermaid.py` (Exit Code 0, 0 Fehler).
+- **Zielgruppen-Personas & SEO**:
+  - `[PERSONA-01]` Lokale LLM- & Ollama-Power-User
+  - `[PERSONA-02]` Technische Autoren, Forscher & Übersetzer
+  - `[PERSONA-03]` Datenschutzbewusste Organisationen & Unternehmen
+  - `[PERSONA-04]` Autonome Multi-Agenten- & Pipeline-Architekten
+- **Vergleichsmatrix**: 10 Dimensionen gegen 4 Alternativen (Cloud-Dienste, naive Skripte, schwere Frameworks).
+- **Drittanbieter-Lizenz-Audit**: Neues Manifest `THIRD_PARTY_LICENSES.md` mit SPDX-Notizen, `requests` (Apache-2.0), `click` (BSD-3-Clause), `pypandoc` (MIT) und Zero-Copyleft-Subprozess-Isolation für externes Pandoc.
+- **Rechtlicher Schutz**: Gesetzlicher Hinweis nach § 521 BGB (Gefälligkeitsrecht) in `README.de.md` integriert.
+- **Ökosystem-Vernetzung**: Cross-Links zu `ellmos-codecommander-mcp`, `n8n-workflow-manager`, `decision-clicker`, `prompt-listener` und `open-bricks`.

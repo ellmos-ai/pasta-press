@@ -3,8 +3,8 @@
 
 ## Metadata
 - Version: 1.2.2
-- License: MIT
-- Last-checked: 2026-09-14
+- License: MIT (Code) / THIRD_PARTY_LICENSES.md (Dependencies)
+- Last-checked: 2026-09-18
 - Status: Active development
 - Repository: https://github.com/ellmos-ai/pasta-press
 
@@ -51,3 +51,4 @@
 - `python -m pytest -ra -v`: Run full contract and unit test suite.
 - `python -m ruff check .`: Lint Python source files.
 - `python -m compileall -q pastapress tests docs`: Validate Python syntax.
+- `python path/to/_tools/lint_mermaid.py .`: Validate Mermaid diagram syntax.

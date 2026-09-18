@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## [Unreleased] - 2026-09-18
+### Added
+- **Pfad B Visual Architecture & Discoverability**: Dual Mermaid diagrams in `README.md` and `README.de.md` (`flowchart TD` system topology with quoted node labels and `sequenceDiagram` processing lifecycle with `autonumber` and zero semicolons).
+- **Bilingual Navigation Parity**: Reciprocal quick navigation anchors across English and German documentation.
+- **Audited Target Personas & Comparative Matrix**: Documented personas `[PERSONA-01]`..`[PERSONA-04]` and 10-dimension comparison matrix against cloud paraphrasers, raw Ollama scripts, and heavy agent frameworks.
+- **Third-Party Licenses & Invariants Manifest (`THIRD_PARTY_LICENSES.md`)**: Full SBOM detailing runtime dependencies (`requests`, `click`, `pypandoc`, `pandoc` external process isolation), unprivileged `RunAsInvoker` certification, and Zero-Copyleft isolation guarantee.
+- **Statutory German Law Notice**: Included § 521 BGB (Gefälligkeitsrecht) disclaimer in `README.de.md`.
+- **Ecosystem Cross-Links**: Integrated cross-links to sibling projects (`ellmos-codecommander-mcp`, `n8n-workflow-manager`, `decision-clicker`, `prompt-listener`, `open-bricks`).
+- **Comprehensive Pfad B Contract Tests**: Added automated tests in `tests/test_repository_hygiene.py` verifying navigation anchor parity, persona definitions, comparative matrix invariants, Mermaid syntax validity, and third-party license declarations.
+
 ## [1.2.2] - 2026-09-14
 ### Added
 - Standardized PEP 621 packaging metadata in `pyproject.toml` with console script entry point `pastapress = pastapress.cli:cli`.
