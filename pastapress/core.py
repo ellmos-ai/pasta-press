@@ -1,6 +1,7 @@
 import os
-from .config import CONFIG, logger
+
 from .chunker import TextChunker
+from .config import CONFIG, logger
 from .llm_client import LLMClient, LLMProcessingError
 
 
@@ -96,7 +97,7 @@ class PastaPressCore:
 
         try:
             text, was_converted = read_text_from_file(input_path)
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             logger.error(f"Failed to read file: {e}")
             return False
 

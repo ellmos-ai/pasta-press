@@ -1,5 +1,6 @@
 from pastapress.queue_manager import QueueManager
 
+
 def test_queue_manager_add_and_pop(tmp_path):
     queue_file = tmp_path / "test_queue.json"
     qm = QueueManager(queue_file=str(queue_file))

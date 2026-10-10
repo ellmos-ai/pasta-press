@@ -1,11 +1,12 @@
-import requests
 import time
+
+import requests
+
 from .config import CONFIG, logger
 
 
 class LLMProcessingError(Exception):
     """Raised when the LLM could not process a chunk after all retries."""
-    pass
 
 
 class LLMClient:
@@ -111,7 +112,7 @@ TOP RULES / OBERSTE REGELN:
                 else:
                     raise ValueError(f"Unexpected response format: {result}")
 
-            except Exception as e:
+            except Exception as e:  # noqa: BLE001
                 last_error = e
                 logger.warning(f"Error during LLM processing (Attempt {attempt + 1}/{retries}): {e}")
                 if attempt < retries - 1:

@@ -1,6 +1,6 @@
-import os
 import json
 import logging
+import os
 
 CONFIG_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'config.json')
 
@@ -32,7 +32,7 @@ def load_config():
                 config.update(user_config)
                 return config
             except json.JSONDecodeError:
-                logging.error(f"Error parsing {CONFIG_FILE}. Using default values.")
+                logging.getLogger(__name__).error(f"Error parsing {CONFIG_FILE}. Using default values.")
                 return DEFAULT_CONFIG.copy()
     else:
         # Erstelle initiales config file

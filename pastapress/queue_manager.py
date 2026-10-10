@@ -1,6 +1,8 @@
-import os
 import json
+import os
+
 from .config import CONFIG, logger
+
 
 class QueueManager:
     def __init__(self, queue_file=None):

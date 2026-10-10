@@ -1,5 +1,11 @@
 import pytest
-from pastapress.document_parser import read_text_from_file, SUPPORTED_FORMATS, TEXT_FORMATS, PANDOC_FORMATS
+
+from pastapress.document_parser import (
+    PANDOC_FORMATS,
+    SUPPORTED_FORMATS,
+    TEXT_FORMATS,
+    read_text_from_file,
+)
 
 
 def test_reads_plain_utf8(tmp_path):
@@ -12,7 +18,7 @@ def test_reads_plain_utf8(tmp_path):
 
 def test_utf8_bom_is_stripped(tmp_path):
     f = tmp_path / "bom.txt"
-    f.write_bytes(b"\xef\xbb\xbf" + "Text mit BOM".encode("utf-8"))
+    f.write_bytes(b"\xef\xbb\xbf" + b"Text mit BOM")
     text, _ = read_text_from_file(str(f))
     assert text == "Text mit BOM"
 

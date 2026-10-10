@@ -1,5 +1,6 @@
 import pytest
 import requests
+
 from pastapress.llm_client import LLMClient, LLMProcessingError
 from tests.conftest import FakeResponse
 

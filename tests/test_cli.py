@@ -1,6 +1,8 @@
 import json
 import os
+
 from click.testing import CliRunner
+
 from pastapress.cli import cli
 from pastapress.config import CONFIG
 

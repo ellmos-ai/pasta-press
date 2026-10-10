@@ -1,4 +1,5 @@
 import os
+
 from .config import logger
 
 try:
@@ -25,7 +26,7 @@ def ensure_pandoc():
         try:
             pypandoc.download_pandoc()
             return True
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             logger.error(f"Failed to download Pandoc: {e}")
             return False
 

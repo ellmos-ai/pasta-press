@@ -1,9 +1,11 @@
-import click
 import os
-from .core import PastaPressCore
-from .queue_manager import QueueManager
+
+import click
+
 from .config import CONFIG
+from .core import PastaPressCore
 from .document_parser import SUPPORTED_FORMATS
+from .queue_manager import QueueManager
 
 STYLE_CHOICES = click.Choice(['original', 'gleichwertig', 'wissenschaftlich', 'einfach', 'kurz'])
 
@@ -11,7 +13,6 @@ STYLE_CHOICES = click.Choice(['original', 'gleichwertig', 'wissenschaftlich', 'e
 @click.group()
 def cli():
     """PastaPress - Stylistic text refinement via local Ollama."""
-    pass
 
 
 @cli.command()

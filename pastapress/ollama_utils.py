@@ -1,5 +1,7 @@
 import requests
+
 from pastapress.config import CONFIG, logger
+
 
 def get_available_models(host=None):
     """Fetches a list of available models from the local Ollama instance."""

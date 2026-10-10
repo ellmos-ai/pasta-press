@@ -4,8 +4,9 @@
 from __future__ import annotations
 
 import compileall
-from pathlib import Path
 import re
+from pathlib import Path
+
 import tomllib
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -175,10 +176,9 @@ def test_mermaid_diagrams_syntax_and_guardrails():
                 in_seq = True
             elif in_seq and line.strip() == "```":
                 in_seq = False
-            elif in_seq:
-                if "->>" in line or "-->>" in line or ": " in line:
-                    clean_line = re.sub(r"&[a-zA-Z0-9#]+;", "", line)
-                    assert ";" not in clean_line, f"Semikolon in Sequenzzeile bricht GitHub: {line}"
+            elif in_seq and ("->>" in line or "-->>" in line or ": " in line):
+                clean_line = re.sub(r"&[a-zA-Z0-9#]+;", "", line)
+                assert ";" not in clean_line, f"Semikolon in Sequenzzeile bricht GitHub: {line}"
 
 
 def test_third_party_licenses_manifest():
